@@ -114,8 +114,8 @@ while(continuar){
            alert('Ha decidido cerrar la aplicación')
            break
     }
-    let confirmacion = prompt("Desea realizar otra operación? (si/no)")
-    if(confirmacion == 'no') {
+    let confirmacion = confirm ("Desea realizar otra operación?")
+    if(confirmacion == false) {
         continuar = false
         alert('Gracias por usar nuestra calculadora')
     }
