@@ -6,23 +6,20 @@
 
 //variables 
 
-let nombre = prompt ('cual es tu nombre?')
-let edad = parseInt(prompt ('cual es tu edad?'))
-let altura = parseInt(prompt ('cual es tu altura (en cm)?'))
-let peso = parseInt(prompt ('cual es tu peso (en Kg)?'))
-let genero = prompt ('sos hombre o mujer')
+let nombre = prompt ('Cual es tu nombre?')
+let edad = parseInt(prompt ('Cual es tu edad?'))
+let altura = parseInt(prompt ('Cual es tu altura (en cm)?'))
+let peso = parseInt(prompt ('Cual es tu peso (en Kg)?'))
+let genero = prompt ('Eres hombre o mujer')
+let continuar = true
 
-//CONSTANTES
+// ARRAYS
 
-const TDEEsedentario = 1.2
-const TDEEligero = 1.375
-const TDEEmoderado = 1.55
-const TDEEactivo = 1.725
-const TDEEmuyActivo = 1.9
+const factorActividad = [sedentario = 1.2, libero = 1.375, moderado = 1.55, activo = 1.725, muyActivo = 1.9]
+console.log(factorActividad)
 
-const mantenerPeso = 1
-const disminuirPeso = 0.8
-const aumentarPeso = 1.2
+const factorObjetivo = [mantenerPeso = 1, disminuirPeso = 0.8, aumentarPeso = 1.2 ]
+console.log(factorObjetivo)
 
 // CONDICIONALES
 // calcular TMB (Tasa Metabólica Basal) Dependiendo del género
@@ -36,64 +33,69 @@ if (genero === 'hombre') {
 alert('El género ingresado no es válido.');
 }
 
-console.log('Tu Tasa Metabolica es de ' + tmb )
+console.log('La Tasa Metabolica de ' + nombre + ' es de ' + tmb )
 
 // switch
-let nivelActividad = parseInt(prompt ('cual es tu nivel de actividad ( ingrese 1 si es sedentario, 2 si es ligero, 3 si es moderado, 4 si es activo o 5 si es muy activo?'))
 
-switch (nivelActividad) {
-    case 1:
-        tdee = tmb * TDEEsedentario; 
-        break;
-    case 2:
-        tdee = tmb * TDEEligero;
-        break;
-    case 3: 
-        tdee = tmb * TDEEmoderado; 
-        break;
-    case 4:
-        tdee = tmb * TDEEactivo;
-        break;
-    case 5:
-        tdee = tmb * TDEEmuyActivo;
-        break;
-    default:
-        alert( ' el parámetro ingresado es inválido')
-        break
+function obtenerNivelActividad() {
+    let nivelActividad;
+    while(continuar){
+        nivelActividad = parseInt(prompt ('Cual es tu nivel de actividad ( ingrese 1: si es sedentario, 2: si es ligero, 3: si es moderado, 4: si es activo o 5: si es muy activo?'))
+    if (nivelActividad >= 1 && nivelActividad <= 5){
+        return nivelActividad;
+    } else {
+        alert(' El parámetro ingresado es inválido, por favor ingresa un número del 1 al 5')
+        }
+    }
 }
 
-let objetivoBuscado = parseInt(prompt ('cual es tu objetivo? ( ingresa 1 si es mentener, 2 si es disminuir o 3 si es aumentar?'))
-
-switch (objetivoBuscado) {
-    case 1:
-        ajusteObjetivo = tdee * mantenerPeso 
-        break
-    case 2:
-        ajusteObjetivo = tdee * disminuirPeso
-        break
-    case 3: 
-        ajusteObjetivo = tdee * aumentarPeso 
-        break
-    default:
-        alert(' el parámetro ingresado es inválido')
-        break
+let nivelActividad = obtenerNivelActividad();
+    switch (nivelActividad) {
+            case 1:
+                tdee = tmb * factorActividad[0]
+                break;
+            case 2:
+                tdee = tmb * factorActividad[1] 
+                break;
+            case 3: 
+                tdee = tmb * factorActividad[2] 
+                break;
+            case 4:
+                tdee = tmb * factorActividad[3]
+                break
+            case 5:
+                tdee = tmb * factorActividad[4]
+                break
 }
+console.log('El gasto calórico de ' + nombre + ' es de ' + tdee + ' calorías diarias');
 
-
-
-// ARRAYS
-
-const factorActividad = [TDEEsedentario, TDEEligero, TDEEmoderado, TDEEactivo,TDEEmuyActivo ]
-console.log(factorActividad)
-
-const objetivo = [mantenerPeso, disminuirPeso, aumentarPeso]
-
-console.log(objetivo)
+function obtenerObjetivoBuscado() {
+    let objetivoBuscado;
+    while(continuar){
+        objetivoBuscado = parseInt(prompt ('Cual es tu objetivo? ( ingresa 1: si es mentener, 2: si es disminuir o 3: si es aumentar?'))
+        if(objetivoBuscado >= 1 && objetivoBuscado <=3){
+            return objetivoBuscado
+        } else {
+            alert('El parámetro ingresado es inválido, por favor ingresa un número del 1 al 3')
+        }
+    }
+}
+    let objetivoBuscado=obtenerObjetivoBuscado()
+    switch (objetivoBuscado) {
+        case 1:
+            ajusteObjetivo = tdee * factorObjetivo[0] 
+            break
+        case 2:
+            ajusteObjetivo = tdee * factorObjetivo[1]
+            break
+        case 3: 
+            ajusteObjetivo = tdee * factorObjetivo[2]
+            break
+    }
+console.log( nombre + ' necesita consumir ' + ajusteObjetivo + ' calorias diarias para conseguir el objetivo seleccionado')
 
 
 // Swhich-while - menu 
-
-let continuar = true
 
 while(continuar){
     let menu = parseInt(prompt('Que operación deseas realizar?: Ingresa 1 si queres conocer tu Tasa Metabolica Basal (TMB); Ingresa 2 si quiere conocer su Gasto Calorico (TDEE); Ingresa 3 si queres sabes cuantas calorias debes consumir si quieres mantener, disminuir o aumentar peso, Ingresa otro número para salir'))
@@ -109,8 +111,8 @@ while(continuar){
             alert(nombre+ ', conforme al objetivo señalado es necesario que consumas la cantidad de ' + ajusteObjetivo + ' calorias diarias')
             break
         default:
-           alert('Gracias por usar nuestra calculadora')
-            break
+           alert('Ha decidido cerrar la aplicación')
+           break
     }
     let confirmacion = prompt("Desea realizar otra operación? (si/no)")
     if(confirmacion == 'no') {
@@ -121,11 +123,11 @@ while(continuar){
 
  //OBJETO literal
 
- const usuario = {
+ const datosUsuario = {
     nombre,
     edad,
     altura,
     peso,
     genero,
  }
- console.log(usuario)
+ console.log(datosUsuario)
