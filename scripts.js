@@ -33,7 +33,8 @@ if (genero === 'hombre') {
 alert('El género ingresado no es válido.');
 }
 
-console.log('La Tasa Metabólica de ' + nombre + ' es de ' + tmb )
+tmb = Math.round(tmb);
+console.log('La Tasa Metabólica de ' + nombre + ' es de ' + tmb );
 
 // switch
 
@@ -52,21 +53,22 @@ function obtenerNivelActividad() {
 let nivelActividad = obtenerNivelActividad();
     switch (nivelActividad) {
             case 1:
-                tdee = tmb * factorActividad[0]
+                tdee = tmb * factorActividad[0];
                 break;
             case 2:
-                tdee = tmb * factorActividad[1] 
+                tdee = tmb * factorActividad[1];
                 break;
             case 3: 
-                tdee = tmb * factorActividad[2] 
+                tdee = tmb * factorActividad[2]; 
                 break;
             case 4:
-                tdee = tmb * factorActividad[3]
-                break
+                tdee = tmb * factorActividad[3];
+                break;
             case 5:
-                tdee = tmb * factorActividad[4]
-                break
+                tdee = tmb * factorActividad[4];
+                break;
 }
+tdee = Math.round(tdee);
 console.log('El gasto calórico de ' + nombre + ' es de ' + tdee + ' calorías diarias');
 
 function obtenerObjetivoBuscado() {
@@ -83,14 +85,14 @@ function obtenerObjetivoBuscado() {
     let objetivoBuscado=obtenerObjetivoBuscado()
     switch (objetivoBuscado) {
         case 1:
-            ajusteObjetivo = tdee * factorObjetivo[0] 
-            break
+            ajusteObjetivo = tdee * factorObjetivo[0]; 
+            break;
         case 2:
-            ajusteObjetivo = tdee * factorObjetivo[1]
-            break
+            ajusteObjetivo = tdee * factorObjetivo[1];
+            break;
         case 3: 
-            ajusteObjetivo = tdee * factorObjetivo[2]
-            break
+            ajusteObjetivo = tdee * factorObjetivo[2];
+            break;
     }
 console.log( nombre + ' necesita consumir ' + ajusteObjetivo + ' calorías diarias para conseguir el objetivo seleccionado')
 
@@ -102,17 +104,17 @@ while(continuar){
 
     switch (menu) {
         case 1: 
-            alert('Tu Tasa Metabólica es de ' + tmb)
-            break
+            alert('Tu Tasa Metabólica es de ' + tmb);
+            break;
         case 2: 
-            alert( 'Tu Gasto Calórico es de ' + tdee + ' calorías diarias')
-            break
+            alert( 'Tu Gasto Calórico es de ' + tdee + ' calorías diarias');
+            break;
         case 3: 
-            alert(nombre+ ', conforme al objetivo señalado es necesario que consumas la cantidad de ' + ajusteObjetivo + ' calorías diarias')
-            break
+            alert(nombre+ ', conforme al objetivo señalado es necesario que consumas la cantidad de ' + ajusteObjetivo + ' calorías diarias');
+            break;
         default:
-           alert('Has decidido cerrar la aplicación')
-           break
+           alert('Has decidido cerrar la aplicación');
+           break;
     }
     let confirmacion = confirm ("¿Deseás realizar otra operación?")
     if(confirmacion == false) {
