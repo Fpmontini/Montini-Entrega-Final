@@ -6,11 +6,11 @@
 
 //variables 
 
-let nombre = prompt ('Cual es tu nombre?')
-let edad = parseInt(prompt ('Cual es tu edad?'))
-let altura = parseInt(prompt ('Cual es tu altura (en cm)?'))
-let peso = parseInt(prompt ('Cual es tu peso (en Kg)?'))
-let genero = prompt ('Eres hombre o mujer')
+let nombre = prompt ('¿Cual es tu nombre?')
+let edad = parseInt(prompt ('¿Cual es tu edad?'))
+let altura = parseInt(prompt ('¿Cual es tu altura (en cm)?'))
+let peso = parseInt(prompt ('¿Cual es tu peso (en Kg)?'))
+let genero = prompt ('¿Eres hombre o mujer')
 let continuar = true
 
 // ARRAYS
@@ -33,18 +33,18 @@ if (genero === 'hombre') {
 alert('El género ingresado no es válido.');
 }
 
-console.log('La Tasa Metabolica de ' + nombre + ' es de ' + tmb )
+console.log('La Tasa Metabólica de ' + nombre + ' es de ' + tmb )
 
 // switch
 
 function obtenerNivelActividad() {
     let nivelActividad;
     while(continuar){
-        nivelActividad = parseInt(prompt ('Cual es tu nivel de actividad ( ingrese 1: si es sedentario, 2: si es ligero, 3: si es moderado, 4: si es activo o 5: si es muy activo?'))
+        nivelActividad = parseInt(prompt ('¿Cual es tu nivel de actividad? Opciones: ingresá 1 si es sedentario, 2: si es ligero, 3: si es moderado, 4: si es activo o 5: si es muy activo'))
     if (nivelActividad >= 1 && nivelActividad <= 5){
         return nivelActividad;
     } else {
-        alert(' El parámetro ingresado es inválido, por favor ingresa un número del 1 al 5')
+        alert(' El parámetro ingresado es inválido, por favor ingresá un número del 1 al 5')
         }
     }
 }
@@ -72,11 +72,11 @@ console.log('El gasto calórico de ' + nombre + ' es de ' + tdee + ' calorías d
 function obtenerObjetivoBuscado() {
     let objetivoBuscado;
     while(continuar){
-        objetivoBuscado = parseInt(prompt ('Cual es tu objetivo? ( ingresa 1: si es mentener, 2: si es disminuir o 3: si es aumentar?'))
+        objetivoBuscado = parseInt(prompt ('¿Cual es tu objetivo? Opciones: ingresá 1 si es mentener peso; 2: si es disminuir peso; 3: si es aumentar el peso'))
         if(objetivoBuscado >= 1 && objetivoBuscado <=3){
             return objetivoBuscado
         } else {
-            alert('El parámetro ingresado es inválido, por favor ingresa un número del 1 al 3')
+            alert('El parámetro ingresado es inválido, por favor ingresá un número del 1 al 3')
         }
     }
 }
@@ -92,29 +92,29 @@ function obtenerObjetivoBuscado() {
             ajusteObjetivo = tdee * factorObjetivo[2]
             break
     }
-console.log( nombre + ' necesita consumir ' + ajusteObjetivo + ' calorias diarias para conseguir el objetivo seleccionado')
+console.log( nombre + ' necesita consumir ' + ajusteObjetivo + ' calorías diarias para conseguir el objetivo seleccionado')
 
 
 // Swhich-while - menu 
 
 while(continuar){
-    let menu = parseInt(prompt('Que operación deseas realizar?: Ingresa 1 si queres conocer tu Tasa Metabolica Basal (TMB); Ingresa 2 si quiere conocer su Gasto Calorico (TDEE); Ingresa 3 si queres sabes cuantas calorias debes consumir si quieres mantener, disminuir o aumentar peso, Ingresa otro número para salir'))
+    let menu = parseInt(prompt('¿Que operación deseas realizar? Opciones: Ingresá 1 si queres conocer tu Tasa Metabolica Basal (TMB); Ingresá 2 si querés conocer tu Gasto Calórico (TDEE); Ingresá 3 si queres sabes cuantas calorías debes consumir si quieres mantener, disminuir o aumentar peso, Ingresa otro número para salir'))
 
     switch (menu) {
         case 1: 
-            alert('Tu Tasa Metabolica es de ' + tmb)
+            alert('Tu Tasa Metabólica es de ' + tmb)
             break
         case 2: 
-            alert( 'Tu Gasto Calórico es de ' + tdee + ' calorias diarias')
+            alert( 'Tu Gasto Calórico es de ' + tdee + ' calorías diarias')
             break
         case 3: 
-            alert(nombre+ ', conforme al objetivo señalado es necesario que consumas la cantidad de ' + ajusteObjetivo + ' calorias diarias')
+            alert(nombre+ ', conforme al objetivo señalado es necesario que consumas la cantidad de ' + ajusteObjetivo + ' calorías diarias')
             break
         default:
-           alert('Ha decidido cerrar la aplicación')
+           alert('Has decidido cerrar la aplicación')
            break
     }
-    let confirmacion = confirm ("Desea realizar otra operación?")
+    let confirmacion = confirm ("¿Deseás realizar otra operación?")
     if(confirmacion == false) {
         continuar = false
         alert('Gracias por usar nuestra calculadora')
