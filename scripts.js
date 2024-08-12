@@ -5,131 +5,147 @@
 
 
 //variables 
-
-let nombre = prompt ('¿Cual es tu nombre?')
-let edad = parseInt(prompt ('¿Cual es tu edad?'))
-let altura = parseInt(prompt ('¿Cual es tu altura (en cm)?'))
-let peso = parseInt(prompt ('¿Cual es tu peso (en Kg)?'))
-let genero = prompt ('¿Eres hombre o mujer')
-let continuar = true
-
-// ARRAYS
-
-const factorActividad = [sedentario = 1.2, libero = 1.375, moderado = 1.55, activo = 1.725, muyActivo = 1.9]
-console.log(factorActividad)
-
+const usuarios = []
+const factorActividad = [sedentario = 1.2, ligero = 1.375, moderado = 1.55, activo = 1.725, muyActivo = 1.9]
 const factorObjetivo = [mantenerPeso = 1, disminuirPeso = 0.8, aumentarPeso = 1.2 ]
-console.log(factorObjetivo)
 
-// CONDICIONALES
-// calcular TMB (Tasa Metabólica Basal) Dependiendo del género
+const calculadora = document.getElementById("calc")
+const DatosRegistrados = document.getElementById("registro")
 
-let tmb;
-if (genero === 'hombre') {
-    tmb = 88.362 + (13.397 * peso) + (4.799 * altura) - (5.677 * edad);
-} else if (genero === 'mujer') {
-    tmb = 447.593 + (9.247 * peso) + (3.098 * altura) - (4.330 * edad);
-} else {
-alert('El género ingresado no es válido.');
-}
 
-tmb = Math.round(tmb);
-console.log('La Tasa Metabólica de ' + nombre + ' es de ' + tmb );
 
-// switch
+// evento
 
-function obtenerNivelActividad() {
-    let nivelActividad;
-    while(continuar){
-        nivelActividad = parseInt(prompt ('¿Cual es tu nivel de actividad? Opciones: ingresá 1 si es sedentario, 2: si es ligero, 3: si es moderado, 4: si es activo o 5: si es muy activo'))
-    if (nivelActividad >= 1 && nivelActividad <= 5){
-        return nivelActividad;
-    } else {
-        alert(' El parámetro ingresado es inválido, por favor ingresá un número del 1 al 5')
+calculadora.addEventListener('submit', calcularCalorias)
+    function calcularCalorias(e){
+        e.preventDefault(); //evita que el formulario se envie automaticamente y recargue la página
+        let nombre = document.getElementById("nombre").value
+        let edad = document.getElementById("edad").value
+        let altura = document.getElementById("altura").value
+        let peso = document.getElementById("peso").value
+        let genero = document.getElementById("genero").value
+        let actividad = document.getElementById("nivelactividad").value
+        let objetivo = document.getElementById("objetivo").value
+
+        //enviar datos 
+        document.getElementById("dato-nombre").innerText = ` ${nombre}`;
+        document.getElementById("dato-edad").innerText = ` ${edad}`;
+        document.getElementById("dato-altura").innerText = ` ${altura} cm`;
+        document.getElementById("dato-peso").innerText = ` ${peso} kg`;
+        document.getElementById("dato-genero").innerText = ` ${genero}`;
+        document.getElementById("dato-actividad").innerText = ` ${actividad}`;
+        document.getElementById("dato-objetivo").innerText = ` ${objetivo}`;
+        
+        
+       
+        //calcular calorias
+
+        // calcular TMB (Tasa Metabólica Basal) Dependiendo del género
+
+        let tmb;
+        if (genero === 'hombre') {
+            tmb = 88.362 + (13.397 * peso) + (4.799 * altura) - (5.677 * edad);
+        } else if (genero === 'mujer') {
+         tmb = 447.593 + (9.247 * peso) + (3.098 * altura) - (4.330 * edad);
+        } 
+        tmb = Math.round(tmb);
+
+
+        // calcular tdee (gasto energetico diario)
+        let tdee;
+        if (actividad === 'sedentario'){
+            tdee = tmb * factorActividad[0];
+        } else if (actividad === 'ligero'){
+            tdee = tmb * factorActividad[1];
+        } else if (actividad === 'moderado'){
+            tdee = tmb * factorActividad[2];
+        } else if (actividad === 'activo') {
+            tdee = tmb * factorActividad[3];
+        } else if (actividad === 'muy activo'){
+            tdee = tmb * factorActividad[4];
         }
-    }
-}
-
-let nivelActividad = obtenerNivelActividad();
-    switch (nivelActividad) {
-            case 1:
-                tdee = tmb * factorActividad[0];
-                break;
-            case 2:
-                tdee = tmb * factorActividad[1];
-                break;
-            case 3: 
-                tdee = tmb * factorActividad[2]; 
-                break;
-            case 4:
-                tdee = tmb * factorActividad[3];
-                break;
-            case 5:
-                tdee = tmb * factorActividad[4];
-                break;
-}
-tdee = Math.round(tdee);
-console.log('El gasto calórico de ' + nombre + ' es de ' + tdee + ' calorías diarias');
-
-function obtenerObjetivoBuscado() {
-    let objetivoBuscado;
-    while(continuar){
-        objetivoBuscado = parseInt(prompt ('¿Cual es tu objetivo? Opciones: ingresá 1 si es mentener peso; 2: si es disminuir peso; 3: si es aumentar el peso'))
-        if(objetivoBuscado >= 1 && objetivoBuscado <=3){
-            return objetivoBuscado
-        } else {
-            alert('El parámetro ingresado es inválido, por favor ingresá un número del 1 al 3')
-        }
-    }
-}
-    let objetivoBuscado=obtenerObjetivoBuscado()
-    switch (objetivoBuscado) {
-        case 1:
-            ajusteObjetivo = tdee * factorObjetivo[0]; 
-            break;
-        case 2:
+        
+        let ajusteObjetivo;
+        if (objetivo === 'mantener peso'){
+            ajusteObjetivo = tdee * factorObjetivo[0];
+        } else if (objetivo === 'disminuir peso'){
             ajusteObjetivo = tdee * factorObjetivo[1];
-            break;
-        case 3: 
+        } else if (objetivo === 'aumentar peso'){
             ajusteObjetivo = tdee * factorObjetivo[2];
-            break;
-    }
-console.log( nombre + ' necesita consumir ' + ajusteObjetivo + ' calorías diarias para conseguir el objetivo seleccionado')
+        }
+       
 
+        // resultado
 
-// Swhich-while - menu 
+        let resultado;
+        if (objetivo === "conocer tdee"){
+            resultado = tdee;
+            }else if (objetivo === "conocer tmb"){
+            resultado = tmb;
+            } else if (objetivo === "mantener peso"){
+                resultado = ajusteObjetivo;
+            } else if (objetivo === "disminuir peso"){
+                resultado = ajusteObjetivo;
+            } else if (objetivo === "aumentar peso"){
+                resultado = ajusteObjetivo;
+            }
+            
+            resultado = Math.round(resultado) // redondeo
+            document.getElementById("resultado").innerText = ` ${resultado}`+ ' calórias diarias'
 
-while(continuar){
-    let menu = parseInt(prompt('¿Que operación deseas realizar? Opciones: Ingresá 1 si queres conocer tu Tasa Metabolica Basal (TMB); Ingresá 2 si querés conocer tu Gasto Calórico (TDEE); Ingresá 3 si queres sabes cuantas calorías debes consumir si quieres mantener, disminuir o aumentar peso, Ingresa otro número para salir'))
+            
+            // Objeto usuario
+            const usuario = {
+                nombre: nombre,
+                edad: edad,
+                altura: altura,
+                peso: peso,
+                genero: genero,
+                actividad: actividad,
+                objetivo: objetivo,
+                resultado: resultado + ' calorías diarias',
+            };
+            usuarios.push(usuario);
+            console.log(usuarios);
 
-    switch (menu) {
-        case 1: 
-            alert('Tu Tasa Metabólica es de ' + tmb);
-            break;
-        case 2: 
-            alert( 'Tu Gasto Calórico es de ' + tdee + ' calorías diarias');
-            break;
-        case 3: 
-            alert(nombre+ ', conforme al objetivo señalado es necesario que consumas la cantidad de ' + ajusteObjetivo + ' calorías diarias');
-            break;
-        default:
-           alert('Has decidido cerrar la aplicación');
-           break;
-    }
-    let confirmacion = confirm ("¿Deseás realizar otra operación?")
-    if(confirmacion == false) {
-        continuar = false
-        alert('Gracias por usar nuestra calculadora')
-    }
-}     
+            calculadora.reset() // reseteo para cargar nuevo usuario
 
- //OBJETO literal
+            //funcion orden - calcular promedio edad usuarios
+            function calcularPromedioEdad() { 
+                // reduce para sumar todas las edades
+                const sumaEdades = usuarios.reduce((suma, usuario) => suma + parseInt(usuario.edad), 0);
+                // Calcula el promedio
+                return sumaEdades / usuarios.length;
+        }
 
- const datosUsuario = {
-    nombre,
-    edad,
-    altura,
-    peso,
-    genero,
- }
- console.log(datosUsuario)
+             //funcion orden superior - calcular promedio de peso 
+             function calcularPromedioPeso() { 
+                // reduce para sumar todos los pesos
+                const sumaPesos = usuarios.reduce((suma, usuario) => suma + parseInt(usuario.peso), 0);
+                // Calcula el promedio
+                return sumaPesos / usuarios.length;
+        }
+    
+            //funcion orden superior - forEach
+
+            const dataUsuario = usuarios.forEach(usuario => {
+                console.log(`El usuario ${usuario.nombre} tiene ${usuario.edad}  años y tiene como objetivo  ${usuario.objetivo}`)
+                
+            });
+
+            //funcion orden superior - filter
+
+            const filterBajarPeso = usuarios.filter(usuario => usuario.objetivo === "disminuir peso")
+            console.log(filterBajarPeso)
+            const promedioEdad = calcularPromedioEdad()
+            console.log(' la edad promedio de los usuarios es de '+ promedioEdad + 'años')
+            const promedioPeso = calcularPromedioPeso()
+            console.log(' el peso promedio de los usuarios es de '+ promedioPeso + ' kilos')
+
+             //LOCAL STORAGE
+
+        localStorage.setItem('usuarios', JSON.stringify(usuarios))
+}
+    
+       
+        
