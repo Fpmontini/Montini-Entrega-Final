@@ -43,56 +43,83 @@ calculadora.addEventListener('submit', calcularCalorias)
         // calcular TMB (Tasa Metabólica Basal) Dependiendo del género
 
         let tmb;
-        if (genero === 'hombre') {
+
+        switch (genero) {
+        case 'hombre':
             tmb = 88.362 + (13.397 * peso) + (4.799 * altura) - (5.677 * edad);
-        } else if (genero === 'mujer') {
-         tmb = 447.593 + (9.247 * peso) + (3.098 * altura) - (4.330 * edad);
+            break;
+        case 'mujer':
+                tmb = 447.593 + (9.247 * peso) + (3.098 * altura) - (4.330 * edad);
+                break;
+        default:         
         } 
         tmb = Math.round(tmb);
 
 
         // calcular tdee (gasto energetico diario)
         let tdee;
-        if (actividad === 'sedentario'){
-            tdee = tmb * factorActividad[0];
-        } else if (actividad === 'ligero'){
-            tdee = tmb * factorActividad[1];
-        } else if (actividad === 'moderado'){
-            tdee = tmb * factorActividad[2];
-        } else if (actividad === 'activo') {
-            tdee = tmb * factorActividad[3];
-        } else if (actividad === 'muy activo'){
-            tdee = tmb * factorActividad[4];
+        switch (actividad) {
+            case 'sedentario':
+                tdee = tmb * factorActividad[0];
+                break;
+            case 'ligero':
+                tdee = tmb * factorActividad[1];
+                break;
+            case 'moderado':
+                tdee = tmb * factorActividad[2];
+                break;
+            case 'activo':
+                tdee = tmb * factorActividad[3];
+                break;
+            case 'muy activo':
+                tdee = tmb * factorActividad[4];
+                break;
+            default:
+                tdee = tmb; 
         }
         
         let ajusteObjetivo;
-        if (objetivo === 'mantener peso'){
-            ajusteObjetivo = tdee * factorObjetivo[0];
-        } else if (objetivo === 'disminuir peso'){
-            ajusteObjetivo = tdee * factorObjetivo[1];
-        } else if (objetivo === 'aumentar peso'){
-            ajusteObjetivo = tdee * factorObjetivo[2];
+
+        switch (objetivo) {
+            case 'mantener peso':
+                ajusteObjetivo = tdee * factorObjetivo[0];
+                break;
+            case 'disminuir peso':
+                ajusteObjetivo = tdee * factorObjetivo[1];
+                break;
+            case 'aumentar peso':
+                ajusteObjetivo = tdee * factorObjetivo[2];
+                break;
+            default:
+                ajusteObjetivo = tdee; 
         }
-       
 
         // resultado
 
         let resultado;
-        if (objetivo === "conocer tdee"){
-            resultado = tdee;
-            }else if (objetivo === "conocer tmb"){
-            resultado = tmb;
-            } else if (objetivo === "mantener peso"){
+        switch (objetivo) {
+            case "conocer tdee":
+                resultado = tdee;
+                break;
+            case "conocer tmb":
+                resultado = tmb;
+                break;
+            case "mantener peso":
                 resultado = ajusteObjetivo;
-            } else if (objetivo === "disminuir peso"){
+                break;
+            case "disminuir peso":
                 resultado = ajusteObjetivo;
-            } else if (objetivo === "aumentar peso"){
+                break;
+            case "aumentar peso":
                 resultado = ajusteObjetivo;
-            }
-            
+                break;
+            default:
+                resultado = tmb; // Valor por defecto si no coincide ningún caso
+        }
+        console.log(resultado)
             resultado = Math.round(resultado) // redondeo
             document.getElementById("resultado").innerText = ` ${resultado}`+ ' calórias diarias'
-
+            
             
             // Objeto usuario
             const usuario = {
@@ -147,5 +174,5 @@ calculadora.addEventListener('submit', calcularCalorias)
         localStorage.setItem('usuarios', JSON.stringify(usuarios))
 }
     
-       
+ 
         
