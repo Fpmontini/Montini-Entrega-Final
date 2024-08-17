@@ -195,7 +195,7 @@ calculadora.addEventListener('submit', calcularCalorias)
 }      
 
 
-        // Evento recuperar datos
+        // RECUPERAR DATOS
 
 const botonRecuperar = document.getElementById("recuperarDatos");
 botonRecuperar.addEventListener("click", function() {
@@ -221,7 +221,7 @@ botonRecuperar.addEventListener("click", function() {
     }
 });
 
-    // EVENTO ELIMINAR TODO REGISTRO
+    //  ELIMINAR TODO REGISTRO
 
     const botonEliminar = document.getElementById("eliminardatos");
 
