@@ -18,14 +18,34 @@ const DatosRegistrados = document.getElementById("registro")
 
 calculadora.addEventListener('submit', calcularCalorias)
     function calcularCalorias(e){
-        e.preventDefault(); //evita que el formulario se envie automaticamente y recargue la página
+        e.preventDefault(); //evita el envio del formulario
         let nombre = document.getElementById("nombre").value
-        let edad = document.getElementById("edad").value
-        let altura = document.getElementById("altura").value
-        let peso = document.getElementById("peso").value
+        let edad = parseFloat(document.getElementById("edad").value)
+        let altura = parseFloat(document.getElementById("altura").value)
+        let peso = parseFloat(document.getElementById("peso").value)
         let genero = document.getElementById("genero").value
         let actividad = document.getElementById("nivelactividad").value
         let objetivo = document.getElementById("objetivo").value
+
+         // Validacion datos numericos
+         let validar = true
+         switch (true) {
+            case (edad <= 0):
+                alert('La edad debe ser mayor a 0.');
+                validar = false; 
+                break;
+            case (altura <= 0):
+                alert('La altura debe ser mayor a 0.');
+                validar = false; 
+                break;
+            case (peso <= 0):
+                alert('El peso debe ser mayor a 0.');
+                validar = false; 
+                break;
+        }
+        if (!validar) {
+            return;
+        }
 
         //enviar datos 
         document.getElementById("dato-nombre").innerText = ` ${nombre}`;
@@ -35,7 +55,6 @@ calculadora.addEventListener('submit', calcularCalorias)
         document.getElementById("dato-genero").innerText = ` ${genero}`;
         document.getElementById("dato-actividad").innerText = ` ${actividad}`;
         document.getElementById("dato-objetivo").innerText = ` ${objetivo}`;
-        
         
        
         //calcular calorias
@@ -167,12 +186,57 @@ calculadora.addEventListener('submit', calcularCalorias)
             const promedioEdad = calcularPromedioEdad()
             console.log(' la edad promedio de los usuarios es de '+ promedioEdad + 'años')
             const promedioPeso = calcularPromedioPeso()
-            console.log(' el peso promedio de los usuarios es de '+ promedioPeso + ' kilos')
+            console.log(' el peso promedio de los usuarios es de '+ promedioPeso + ' kilos') 
+            
+            // LOCAL STORAGE 
 
-             //LOCAL STORAGE
+        localStorage.setItem("dataUsuarios", JSON.stringify(usuarios));
 
-        localStorage.setItem('usuarios', JSON.stringify(usuarios))
-}
-    
- 
+}      
+
+
+        // Evento recuperar datos
+
+const botonRecuperar = document.getElementById("recuperarDatos");
+botonRecuperar.addEventListener("click", function() {
+    const dataUsuarios = JSON.parse(localStorage.getItem("dataUsuarios"));
+
+    switch (true) {
+        case dataUsuarios && dataUsuarios.length > 0:
+            const ultimoUsuario = dataUsuarios[dataUsuarios.length - 1]; // último usuario cargado
+
+            document.getElementById("dato-nombre").innerText = ` ${ultimoUsuario.nombre}`;
+            document.getElementById("dato-edad").innerText = ` ${ultimoUsuario.edad}`;
+            document.getElementById("dato-altura").innerText = ` ${ultimoUsuario.altura} cm`;
+            document.getElementById("dato-peso").innerText = ` ${ultimoUsuario.peso} kg`;
+            document.getElementById("dato-genero").innerText = ` ${ultimoUsuario.genero}`;
+            document.getElementById("dato-actividad").innerText = ` ${ultimoUsuario.actividad}`;
+            document.getElementById("dato-objetivo").innerText = ` ${ultimoUsuario.objetivo}`;
+            document.getElementById("resultado").innerText = ` ${ultimoUsuario.resultado}`;
+            break;
         
+        default:
+            alert("No hay datos guardados");
+            break;
+    }
+});
+
+    // EVENTO ELIMINAR TODO REGISTRO
+
+    const botonEliminar = document.getElementById("eliminardatos");
+
+    botonEliminar.addEventListener("click", function() {
+    localStorage.clear(); 
+    alert("Tu registro ha sido eliminado.");
+    
+    document.getElementById("dato-nombre").innerText = "";
+    document.getElementById("dato-edad").innerText = "";
+    document.getElementById("dato-altura").innerText = "";
+    document.getElementById("dato-peso").innerText = "";
+    document.getElementById("dato-genero").innerText = "";
+    document.getElementById("dato-actividad").innerText = "";
+    document.getElementById("dato-objetivo").innerText = "";
+    document.getElementById("resultado").innerText = "";
+});
+
+    

@@ -212,6 +212,20 @@ main {
   cursor: pointer;
 }
 
+.form-delete {
+  width: 100px;
+  height: 25px;
+  margin: 0;
+  padding: none;
+  font-family: audiowide;
+  font-size: 0.55rem;
+  background-color: rgba(197, 189, 189, 0.8705882353);
+  border-color: #2076f7;
+  border-width: 3px;
+  border-style: solid;
+  cursor: pointer;
+}
+
 /* footer */
 footer h6 {
   font-size: 1.5rem;
