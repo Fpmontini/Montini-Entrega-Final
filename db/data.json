@@ -1,0 +1,14 @@
+{
+    "factorActividad": {
+        "sedentario": 1.2,
+        "ligero": 1.375, 
+        "moderado": 1.55, 
+        "activo": 1.725, 
+        "muyActivo": 1.9
+    },
+    "factorObjetivo": {
+        "mantenerPeso": 1,
+        "disminuirPeso": 0.8,
+        "aumentarPeso": 1.2 
+    }
+}

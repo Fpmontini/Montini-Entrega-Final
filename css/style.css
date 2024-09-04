@@ -99,7 +99,7 @@ main {
 
 .h2-calc {
   padding-top: 50px;
-  font-family: jaldi;
+  font-family: audiwide;
   font-size: 2em;
   color: #f4f5f8;
 }
@@ -110,12 +110,41 @@ main {
 
 /* main contact */
 
+.card {
+  color: black !important; 
+  flex: 1 1 calc(33.33% - 10px); /* Tres cards por fila con espacio entre ellas */
+  box-sizing: border-box; /* Asegura que el padding y borde no afecten el tamaño de la card */
+}
+
+#cards-container {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px; 
+}
+
+.card-body .card-text {
+  color: #0a0a0a;
+}
+
+
 .row__form {
   padding-top: 200px;
 }
 
 .row__info {
   margin-top: 50px;
+}
+
+.fm__Main__contact p {
+  font-family: "jaldi";
+  font-size: 1em;
+  color: #fcfcfc;
+}
+
+.fm__registro {
+  font-family: "jaldi";
+  font-size: 1em;
+  color: #0a0a0a;
 }
 
 .fm__contact__container__form {

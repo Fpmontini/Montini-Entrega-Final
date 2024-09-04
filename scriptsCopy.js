@@ -27,33 +27,33 @@ calculadora.addEventListener('submit', calcularCalorias)
         let actividad = document.getElementById("nivelactividad").value
         let objetivo = document.getElementById("objetivo").value
 
-         // Validacion datos numericos
-         let validar = true
-         switch (true) {
-            case (edad <= 0):
-                alert('La edad debe ser mayor a 0.');
-                validar = false; 
-                break;
-            case (altura <= 0):
-                alert('La altura debe ser mayor a 0.');
-                validar = false; 
-                break;
-            case (peso <= 0):
-                alert('El peso debe ser mayor a 0.');
-                validar = false; 
-                break;
-        }
-        if (!validar) {
-            return;
-        }
+        let validar = true;
 
-        //enviar datos 
-        document.getElementById("dato-nombre").innerText = ` ${nombre}`;
-        document.getElementById("dato-edad").innerText = ` ${edad}`;
-        document.getElementById("dato-altura").innerText = ` ${altura} cm`;
-        document.getElementById("dato-peso").innerText = ` ${peso} kg`;
-        document.getElementById("dato-genero").innerText = ` ${genero}`;
-        document.getElementById("dato-actividad").innerText = ` ${actividad}`;
+try {
+    if (edad <= 0) {
+        throw new Error('La edad debe ser mayor a 0.');
+    }
+    if (altura <= 0) {
+        throw new Error('La altura debe ser mayor a 0.');
+    }
+    if (peso <= 0) {
+        throw new Error('El peso debe ser mayor a 0.');
+    }
+} catch (error) {
+    (Swal.fire({
+        title: "ERROR",
+        text: error.message,
+        icon: "error"
+      }));
+    validar = false;
+} finally {
+    if (!validar) {
+        return;
+    }
+}
+    
+
+        //enviar datos
         document.getElementById("dato-objetivo").innerText = ` ${objetivo}`;
         
        
@@ -142,6 +142,7 @@ calculadora.addEventListener('submit', calcularCalorias)
             
             // Objeto usuario
             const usuario = {
+                id: new Date().getTime(),
                 nombre: nombre,
                 edad: edad,
                 altura: altura,
@@ -150,11 +151,16 @@ calculadora.addEventListener('submit', calcularCalorias)
                 actividad: actividad,
                 objetivo: objetivo,
                 resultado: resultado + ' calorías diarias',
+                timestamp: new Date().toLocaleString()
             };
             usuarios.push(usuario);
             console.log(usuarios);
 
-            calculadora.reset() // reseteo para cargar nuevo usuario
+           // Deshabilitar formulario
+            const inputs = calculadora.querySelectorAll('input, select');
+            inputs.forEach(input => {
+            input.disabled = true;
+            });
 
             //funcion orden - calcular promedio edad usuarios
             function calcularPromedioEdad() { 
@@ -172,12 +178,7 @@ calculadora.addEventListener('submit', calcularCalorias)
                 return sumaPesos / usuarios.length;
         }
     
-            //funcion orden superior - forEach
 
-            const dataUsuario = usuarios.forEach(usuario => {
-                console.log(`El usuario ${usuario.nombre} tiene ${usuario.edad}  años y tiene como objetivo  ${usuario.objetivo}`)
-                
-            });
 
             //funcion orden superior - filter
 
@@ -190,53 +191,19 @@ calculadora.addEventListener('submit', calcularCalorias)
             
             // LOCAL STORAGE 
 
-        localStorage.setItem("dataUsuarios", JSON.stringify(usuarios));
-
+            const dataUsuarios = JSON.parse(localStorage.getItem("dataUsuarios")) || [];
+            dataUsuarios.push(usuario);
+            localStorage.setItem("dataUsuarios", JSON.stringify(dataUsuarios));
 }      
 
+// Habilitar el formulario "Volver a calcular"
+document.getElementById('nuevocalculo').addEventListener('click', function() {
+    // resetea formulario
+    const form = document.getElementById('calc');
+    form.reset();
 
-        // RECUPERAR DATOS
-
-const botonRecuperar = document.getElementById("recuperarDatos");
-botonRecuperar.addEventListener("click", function() {
-    const dataUsuarios = JSON.parse(localStorage.getItem("dataUsuarios"));
-
-    switch (true) {
-        case dataUsuarios && dataUsuarios.length > 0:
-            const ultimoUsuario = dataUsuarios[dataUsuarios.length - 1]; // último usuario cargado
-
-            document.getElementById("dato-nombre").innerText = ` ${ultimoUsuario.nombre}`;
-            document.getElementById("dato-edad").innerText = ` ${ultimoUsuario.edad}`;
-            document.getElementById("dato-altura").innerText = ` ${ultimoUsuario.altura} cm`;
-            document.getElementById("dato-peso").innerText = ` ${ultimoUsuario.peso} kg`;
-            document.getElementById("dato-genero").innerText = ` ${ultimoUsuario.genero}`;
-            document.getElementById("dato-actividad").innerText = ` ${ultimoUsuario.actividad}`;
-            document.getElementById("dato-objetivo").innerText = ` ${ultimoUsuario.objetivo}`;
-            document.getElementById("resultado").innerText = ` ${ultimoUsuario.resultado}`;
-            break;
+    // borrar resultados
+    document.getElementById('dato-objetivo').innerText = '';
+    document.getElementById('resultado').innerText = '';
+});
         
-        default:
-            alert("No hay datos guardados");
-            break;
-    }
-});
-
-    //  ELIMINAR TODO REGISTRO
-
-    const botonEliminar = document.getElementById("eliminardatos");
-
-    botonEliminar.addEventListener("click", function() {
-    localStorage.clear(); 
-    alert("Tu registro ha sido eliminado.");
-    
-    document.getElementById("dato-nombre").innerText = "";
-    document.getElementById("dato-edad").innerText = "";
-    document.getElementById("dato-altura").innerText = "";
-    document.getElementById("dato-peso").innerText = "";
-    document.getElementById("dato-genero").innerText = "";
-    document.getElementById("dato-actividad").innerText = "";
-    document.getElementById("dato-objetivo").innerText = "";
-    document.getElementById("resultado").innerText = "";
-});
-
-    
