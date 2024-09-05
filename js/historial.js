@@ -3,13 +3,13 @@
 document.getElementById('recuperarDatos').addEventListener('click', function () {
     const dataUsuarios = JSON.parse(localStorage.getItem('dataUsuarios')) || [];
 
-    const ultimoTresRegistros = dataUsuarios.slice(-3).reverse(); // se obtienen los ultimos 3 registros siendo el mas reciente el primero
+    const ultimosRegistros = dataUsuarios.slice(-6).reverse(); // se obtienen los ultimos 3 registros siendo el mas reciente el primero
     const cardsContainer = document.getElementById('cards-container');
 
     // Limpia cualquier card existente antes de agregar las nuevas
     cardsContainer.innerHTML = '';
 
-    ultimoTresRegistros.forEach((usuario) => {
+    ultimosRegistros.forEach((usuario) => {
         const card = document.createElement('div');
         card.className = 'card mb-3';
         card.innerHTML = `
@@ -53,20 +53,32 @@ function eliminarRegistro(id) {
 }
 
 // Vaciar LocalStorage y cards completamente
+const borrarTodo = document.getElementById("eliminarDatos");
 
-    const borrarTodo = document.getElementById("eliminarDatos");
+borrarTodo.addEventListener("click", function() {
+    // Verifica si hay datos en localStorage
+    const dataUsuarios = JSON.parse(localStorage.getItem('dataUsuarios')) || [];
+    
+    if (dataUsuarios.length > 0) {
+        // Vaciar el localStorage si hay algun dato cargado
+        localStorage.clear();
+        
+        // Eliminar todas las cards
+        const cardsContainer = document.getElementById('cards-container');
+        cardsContainer.innerHTML = '';
 
-    borrarTodo.addEventListener("click", function() {
-    //vacia Local Storage    
-    localStorage.clear(); 
-    //elimina todas las cards
-    const cardsContainer = document.getElementById('cards-container');
-    cardsContainer.innerHTML = '';
-
-    // mensaje de confirmación
-        (Swal.fire({
-        title: "Registros eliminados",
-        text: "Tus registros fueron eliminados satifactoriamente",
-        icon: "success"
-      }));
-    })
+        // Mensaje de confirmación
+        Swal.fire({
+            title: "Registros eliminados",
+            text: "Tus registros fueron eliminados satisfactoriamente",
+            icon: "success"
+        });
+    } else {
+        // Mensaje de error si no hay datos en el localStorage
+        Swal.fire({
+            title: "Error",
+            text: "No hay registros para eliminar.",
+            icon: "error"
+        });
+    }
+});

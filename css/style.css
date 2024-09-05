@@ -99,7 +99,7 @@ main {
 
 .h2-calc {
   padding-top: 50px;
-  font-family: audiwide;
+  font-family: audiowide;
   font-size: 2em;
   color: #f4f5f8;
 }
@@ -110,10 +110,23 @@ main {
 
 /* main contact */
 
+#friends-container {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 16px; 
+}
+
 .card {
-  color: black !important; 
-  flex: 1 1 calc(33.33% - 10px); /* Tres cards por fila con espacio entre ellas */
-  box-sizing: border-box; /* Asegura que el padding y borde no afecten el tamaño de la card */
+  flex: 1 1 calc(33.333% - 16px); 
+  box-sizing: border-box;
+  max-width: calc(33.333% - 16px);
+  min-width: 300px;
+  border: 3px solid #000000;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
 }
 
 #cards-container {
@@ -138,7 +151,7 @@ main {
 .fm__Main__contact p {
   font-family: "jaldi";
   font-size: 1em;
-  color: #fcfcfc;
+  color: #0e0d0d;
 }
 
 .fm__registro {
@@ -167,6 +180,10 @@ main {
 }
 .fm__contact__container__form__description {
   margin: 15px auto;
+}
+
+.fm__contact__container__form__description p {
+  color: #000000;
 }
 .fm__contact__container__image img {
   width: 100%;
@@ -253,6 +270,31 @@ main {
   border-width: 3px;
   border-style: solid;
   cursor: pointer;
+}
+
+.form-submit-2 {
+  width: 200px;
+  height: 50px;
+  margin: 30px;
+  padding: none;
+  font-family: audiowide;
+  background-color: rgba(197, 189, 189, 0.8705882353);
+  border-width: 3px;
+  border-style: solid;
+  cursor: pointer;
+  border-color: #cc2059;
+}
+.form-submit-3 {
+  width: 200px;
+  height: 50px;
+  margin: 30px;
+  padding: none;
+  font-family: audiowide;
+  background-color: rgba(197, 189, 189, 0.8705882353);
+  border-width: 3px;
+  border-style: solid;
+  cursor: pointer;
+  border-color: #07e451;
 }
 
 /* footer */

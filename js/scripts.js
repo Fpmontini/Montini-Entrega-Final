@@ -15,8 +15,6 @@ fetch('./db/data.json')
     .then(data => {
         factorActividad = data.factorActividad;
         factorObjetivo = data.factorObjetivo;
-        console.log(factorActividad); // Verifica los valores
-        console.log(factorObjetivo); // Verifica los valores
     })
     .catch(error => console.error('Error al cargar el archivo JSON:', error));
 
@@ -167,7 +165,7 @@ switch (objetivo) {
             usuarios.push(usuario);
             console.log(usuarios);
 
-           // Deshabilitar formulario
+           // Deshabilita formulario
             const inputs = calculadora.querySelectorAll('input, select');
             inputs.forEach(input => {
             input.disabled = true;
@@ -188,17 +186,6 @@ switch (objetivo) {
                 // Calcula el promedio
                 return sumaPesos / usuarios.length;
         }
-    
-
-
-            //funcion orden superior - filter
-
-            const filterBajarPeso = usuarios.filter(usuario => usuario.objetivo === "disminuir peso")
-            console.log(filterBajarPeso)
-            const promedioEdad = calcularPromedioEdad()
-            console.log(' la edad promedio de los usuarios es de '+ promedioEdad + 'años')
-            const promedioPeso = calcularPromedioPeso()
-            console.log(' el peso promedio de los usuarios es de '+ promedioPeso + ' kilos') 
             
             // LOCAL STORAGE 
 
@@ -207,8 +194,9 @@ switch (objetivo) {
             localStorage.setItem("dataUsuarios", JSON.stringify(dataUsuarios));
 }      
 
-// Habilitar el formulario "Volver a calcular"
+// funcion "Volver a calcular"
 document.getElementById('nuevocalculo').addEventListener('click', function() {
+
     // resetea formulario
     const form = document.getElementById('calc');
     form.reset();
@@ -216,5 +204,11 @@ document.getElementById('nuevocalculo').addEventListener('click', function() {
     // borrar resultados
     document.getElementById('dato-objetivo').innerText = '';
     document.getElementById('resultado').innerText = '';
+
+    // Habilita campos del formulario
+    const inputs = calculadora.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.disabled = false;
+    });
 });
         
