@@ -104,6 +104,7 @@ main {
   color: #f4f5f8;
 }
 
+
 .h3-calc {
   font-family: audiowide;
 }
@@ -152,6 +153,13 @@ main {
   font-family: "jaldi";
   font-size: 1em;
   color: #0e0d0d;
+}
+
+.fm__Main__contact .p-calc {
+  padding-top: 50px;
+  font-family: audiowide;
+  font-size: 1em;
+  color: #f4f5f8;
 }
 
 .fm__registro {
@@ -295,6 +303,12 @@ main {
   border-style: solid;
   cursor: pointer;
   border-color: #07e451;
+}
+.p-calc {
+  padding-top: 50px;
+  font-family: audiowide;
+  font-size: 2em;
+  color: #f4f5f8;
 }
 
 /* footer */
